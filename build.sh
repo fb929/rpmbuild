@@ -20,15 +20,13 @@ SPEC_FILE=$(find /github/workspace/SPECS/ -type f -name "*.spec" | head -1)
 echo SPEC_FILE=$SPEC_FILE
 BUILD_FROM_SPEC=true
 MOCK_PROFILE="mock-centos-7-x86_64"
+CENTOS_RELEASE=7
 LOG_DIR="$HOME/log"
 LOG_FILE="$LOG_DIR/$( basename $0 ).log"
 TMP_DIR="$HOME/tmp"
 RPMBUILD_DIR="$HOME/rpmbuild"
 SOURCEDIR="$RPMBUILD_DIR/SOURCES"
 RPMS_DIR="/var/lib/repo"
-if [[ -z $CENTOS_RELEASE ]]; then
-	CENTOS_RELEASE=$( echo $MOCK_PROFILE | awk -F "-" '{print $2}' )
-fi
 MOCK_DIR="$TMP_DIR/mock/$MOCK_PROFILE"
 RESULT_DIR="$TMP_DIR/result/$MOCK_PROFILE"
 
@@ -37,7 +35,7 @@ if ! [[ -s $SPEC_FILE ]]; then
 	do_usage
 fi
 if echo $CENTOS_RELEASE | grep -vqP "^[0-9]+"; then
-	echo "ERROR: bad format mock profile"
+	echo "ERROR: bad format CENTOS_RELEASE=$CENTOS_RELEASE"
 	exit 1
 fi
 
