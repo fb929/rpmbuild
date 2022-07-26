@@ -1,7 +1,9 @@
 #!/bin/bash
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
 
-ls -al /
+ls -al /home/runner/
+env
+
 exit 0
 
 do_usage(){
