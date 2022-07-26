@@ -1,7 +1,7 @@
 #!/bin/bash
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
 
-ls -al /home/runner/
+ls -al $HOME/
 env
 
 exit 0
