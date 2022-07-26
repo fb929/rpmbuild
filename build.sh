@@ -1,7 +1,9 @@
 #!/bin/bash
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
 
-ls -al $HOME/
+ls -al /github/
+ls -al /github/workspace/
+ls -al /github/home/
 env
 
 exit 0
