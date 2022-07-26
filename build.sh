@@ -1,31 +1,12 @@
 #!/bin/bash
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
 
-ls -al /github/
-ls -al /github/workspace/
-ls -al /github/home/
-env
-
-exit 0
-
 do_usage(){
 	cat <<EOF
 скрипт для сборки
 умеет:
 	1. пересобирать rpm-ки по build-репе
 	2. пересобирать по Source RPM
-
-usage: $0 {path/to/file.spec|path/to/src.rpm} [mock profile]
-
-examples:
-	$0 ~/repos/build-nginx/SPECS/nginx.spec
-	$0 ~/repos/build-nginx/SPECS/nginx.spec steam-6-x86_64
-	$0 ~/srpm/yajl-2.0.4-4.el7.src.rpm
-	$0 ~/srpm/yajl-2.0.4-4.el7.src.rpm steam-6-x86_64
-
-~/repos/build-nginx должен повторять структуру классического rpmbuild, т.е. нужны папки
-	SPECS
-	SOURCES
 
 rpmbuild/ пересоздаётся на каждый вызов $0
 логи скрипта искать в ~/log/
@@ -43,20 +24,8 @@ TMP_DIR="$HOME/tmp"
 RPMBUILD_DIR="$HOME/rpmbuild"
 SOURCEDIR="$RPMBUILD_DIR/SOURCES"
 RPMS_DIR="/var/lib/repo"
-# get args
-for ARG in $@; do
-	if echo "$ARG" | grep -qP '.*\.spec$'; then
-		SPEC_FILE="$ARG"
-		BUILD_FROM_SPEC=true
-	elif echo "$ARG" | grep -qP ".*\.(srpm|src\.rpm)$"; then
-		SRPM_FILE="$ARG"
-	elif echo "$ARG" | grep -qP "^[a-z]+-[0-9]+-[a-z0-9_]+$"; then
-		MOCK_PROFILE="$ARG"
-	elif echo "$ARG" | grep -qP "^--centos-release=[0-9]$"; then
-		CENTOS_RELEASE=$( echo $ARG | sed 's|--centos-release=||' )
-	fi
-	shift
-done
+SPEC_FILE="/github/workspace/SPECS/*.spec"
+BUILD_FROM_SPEC=true
 if [[ -z $CENTOS_RELEASE ]]; then
 	CENTOS_RELEASE=$( echo $MOCK_PROFILE | awk -F "-" '{print $2}' )
 fi
