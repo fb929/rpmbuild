@@ -78,7 +78,7 @@ else
 fi
 
 # build rpm {{
-yum-builddep $SPEC_FILE
+yum-builddep -y $SPEC_FILE
 rpmbuild -ba $SPEC_FILE
 EXIT_CODE=$?
 if [[ $EXIT_CODE != 0 ]]; then
