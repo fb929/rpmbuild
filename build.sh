@@ -35,7 +35,7 @@ if ! [[ -s $SPEC_FILE ]]; then
 	do_usage
 fi
 if echo $CENTOS_RELEASE | grep -vqP "^[0-9]+"; then
-	echo "ERROR: bad format CENTOS_RELEASE=$CENTOS_RELEASE"
+	echo "ERROR: bad format CENTOS_RELEASE=$CENTOS_RELEASE" 1>&2
 	exit 1
 fi
 
@@ -82,11 +82,11 @@ do_build_source_rpm(){
 		#mock --root $MOCK_PROFILE --rootdir=$MOCK_DIR --resultdir=$RESULT_DIR --buildsrpm --spec $SPEC_FILE --sources $RPMBUILD_DIR/SOURCES
 		SRPM_FILE=$( rpmbuild -bs $SPEC_FILE 2>> $LOG_FILE | grep -P "srpm|src\.rpm" | tail -1 | awk '{print $NF}' )
 		if ! [[ -s $SRPM_FILE ]]; then
-			echo "ERROR: failed build srpm file"
+			echo "ERROR: failed build srpm file" 1>&2
 			exit 1
 		fi
 	else
-		echo "ERROR: failed get sources"
+		echo "ERROR: failed get sources" 1>&2
 		exit 1
 	fi
 }
@@ -96,14 +96,14 @@ do_build_rpm(){
 		INFO=$( rpm -qip $SRPM_FILE )
 		RPM_NAME=$( echo "$INFO" | grep -P '^Name\s+:' | awk '{print $NF}' )
 		RPM_VERSION=$( echo "$INFO" | grep -P '^Version\s+:' | awk '{print $NF}' )
-		mock --root $MOCK_PROFILE --rootdir=$MOCK_DIR --resultdir=$RESULT_DIR $SRPM_FILE &> $LOG_DIR/mock.log
+		mock --root $MOCK_PROFILE --rootdir=$MOCK_DIR --resultdir=$RESULT_DIR $SRPM_FILE
 		EXIT_CODE=$?
 		if [[ $EXIT_CODE != 0 ]]; then
-			echo "ERROR: failed mock run, see $LOG_DIR/mock.log"
+			echo "ERROR: failed mock run" 1>&2
 			exit 1
 		fi
 	else
-		echo "ERROR: filed get srpm file"
+		echo "ERROR: filed get srpm file" 1>&2
 		exit 1
 	fi
 }
