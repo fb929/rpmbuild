@@ -90,7 +90,7 @@ fi
 # generate artifacts {{
 ARTIFACTS=
 for PKG in $(find $RPMBUILD_DIR/SRPM/ ); do
-	ARTIFACTS=${ARTIFACTS}\"$PKG\",
+	ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
 done
 echo ::set-output name=matrix::{\"file\": [${ARTIFACTS}]}
 # }}
