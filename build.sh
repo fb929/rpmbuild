@@ -16,6 +16,8 @@ EOF
 
 # vars
 SPEC_FILE=$(find /github/workspace/SPECS/ -type f -name "*.spec" | head -1)
+echo $SPEC_FILE
+exit 0
 BUILD_FROM_SPEC=true
 CENTOS_RELEASE=7
 TMP_DIR="$HOME/tmp"
