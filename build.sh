@@ -89,9 +89,9 @@ fi
 
 # generate artifacts {{
 ARTIFACTS=
-for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f ); do
+for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f | sed "s|^$RPMBUILD_DIR/||" ); do
 	ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
 done
-echo ARTIFACTS="$ARTIFACTS"
+echo name=matrix::{\"file\": [${ARTIFACTS}]}
 echo ::set-output name=matrix::{\"file\": [${ARTIFACTS}]}
 # }}
