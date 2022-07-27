@@ -16,8 +16,6 @@ EOF
 
 # vars
 SPEC_FILE=$(find /github/workspace/SPECS/ -type f -name "*.spec" | head -1)
-echo $SPEC_FILE
-exit 0
 BUILD_FROM_SPEC=true
 CENTOS_RELEASE=7
 TMP_DIR="$HOME/tmp"
@@ -41,6 +39,10 @@ fi
 install -d $TMP_DIR $RPMBUILD_DIR $RESULT_DIR
 install -d $RPMBUILD_DIR/{SOURCES,SPECS,SRPMS}
 # }}
+
+echo $SPEC_FILE
+touch $RPMBUILD_DIR/SRPMS/123213
+exit 0
 
 # sync rpmbuild dir {{
 PATH_TO_REPO=$( dirname $SPEC_FILE | sed 's|/[A-Z]\+$||' )
