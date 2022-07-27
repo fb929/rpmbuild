@@ -92,6 +92,6 @@ ARTIFACTS=
 for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f | sed "s|^$RPMBUILD_DIR/||" ); do
 	ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
 done
-echo name=matrix::{\"file\": [${ARTIFACTS}]}
-echo ::set-output name=matrix::{\"file\": [${ARTIFACTS}]}
+echo name=matrix::{\"file\": [${ARTIFACTS} \"md5sum\"]}
+echo ::set-output name=matrix::{\"file\": [${ARTIFACTS} \"md5sum\"]}
 # }}
