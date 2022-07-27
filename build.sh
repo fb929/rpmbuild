@@ -36,7 +36,7 @@ fi
 if [[ -d $RPMBUILD_DIR ]]; then
 	rm -rf $RPMBUILD_DIR
 fi
-install -d $TMP_DIR $RPMBUILD_DIR $RESULT_DIR
+install -d $TMP_DIR $RPMBUILD_DIR
 install -d $RPMBUILD_DIR/{SOURCES,SPECS,SRPMS}
 # }}
 
@@ -89,7 +89,7 @@ fi
 
 # generate artifacts {{
 ARTIFACTS=
-for PKG in $(find $RPMBUILD_DIR/SRPM/ ); do
+for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f ); do
 	ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
 done
 echo ::set-output name=matrix::{\"file\": [${ARTIFACTS}]}
