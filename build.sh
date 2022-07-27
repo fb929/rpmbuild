@@ -40,10 +40,6 @@ install -d $TMP_DIR $RPMBUILD_DIR $RESULT_DIR
 install -d $RPMBUILD_DIR/{SOURCES,SPECS,SRPMS}
 # }}
 
-echo $SPEC_FILE
-touch $RPMBUILD_DIR/SRPMS/123213
-exit 0
-
 # sync rpmbuild dir {{
 PATH_TO_REPO=$( dirname $SPEC_FILE | sed 's|/[A-Z]\+$||' )
 

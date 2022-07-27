@@ -6,7 +6,7 @@ COPY . .
 
 # Installing tools needed for rpmbuild,
 # depends on BuildRequires field in specfile, (TODO: take as input & install)
-#RUN yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils
+RUN yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils
 
 # run build script
 ENTRYPOINT ["/build.sh"]
