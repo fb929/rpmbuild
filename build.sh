@@ -92,5 +92,6 @@ ARTIFACTS=
 for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f ); do
 	ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
 done
+echo ARTIFACTS="$ARTIFACTS"
 echo ::set-output name=matrix::{\"file\": [${ARTIFACTS}]}
 # }}
