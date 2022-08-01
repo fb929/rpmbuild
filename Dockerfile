@@ -7,6 +7,8 @@ COPY . .
 # Installing tools needed for rpmbuild,
 # depends on BuildRequires field in specfile, (TODO: take as input & install)
 RUN yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils
+RUN yum install --enablerepo=* -y centos-release-scl-rh centos-release-scl
+RUN yum install --enablerepo=* -y rh-ruby23-rubygems
 RUN gem install package_cloud
 
 # run build script
