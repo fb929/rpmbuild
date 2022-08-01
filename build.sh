@@ -100,5 +100,5 @@ for package in *rpm; do ARTIFACTS=${ARTIFACTS}\"$package\",\ ; done
 echo ::set-output name=matrix::{\"file\": [${ARTIFACTS} \"sha256sum\", \"md5sum\"]}
 # }}
 
-# upload to packagecloud.io
-package_cloud push gefimov/test/el/7 $HOME/*.rpm || true
+## upload to packagecloud.io
+#package_cloud push gefimov/test/el/7 $HOME/*.rpm || true
