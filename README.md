@@ -52,6 +52,5 @@ jobs:
           asset_path: ${{ matrix.file}}
           asset_name: ${{ matrix.file}}
           asset_content_type: application/octet-stream
-EOF
 ```
 create dirs SOURCES,SPECS and spec file SPECS/myspec.spec
