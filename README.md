@@ -1,8 +1,7 @@
 # rpmbuild
 ## usage
+create file .github/workflows/release.yml with content:
 ```
-mkdir -p .github/workflows
-cat <<EOF > .github/workflows/release.yml
 ---
 name: rpm build and release
 
@@ -54,3 +53,5 @@ jobs:
           asset_name: ${{ matrix.file}}
           asset_content_type: application/octet-stream
 EOF
+```
+create dirs SOURCES,SPECS and spec file SPECS/myspec.spec
