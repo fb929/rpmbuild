@@ -89,7 +89,7 @@ fi
 
 # move rpms and create checksum
 mv $RPMBUILD_DIR/SRPMS/* $HOME/
-mv $RPMBUILD_DIR/RMPS/*/* $HOME/
+mv $RPMBUILD_DIR/RPMS/*/* $HOME/
 md5sum *.rpm > md5sum
 sha256sum *.rpm > sha256sum
 
