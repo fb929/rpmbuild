@@ -90,19 +90,19 @@ fi
 # generate artifacts {{
 ARTIFACTS=""
 for PKG in $(find $RPMBUILD_DIR/{SRPMS,RPMS}/ -type f ); do
-    PKG_PATH=$( echo $PKG | sed "s|^$RPMBUILD_DIR/||" )
+    PKG_PATH=$( echo "$PKG" | sed "s|^$RPMBUILD_DIR/||" )
     PKG_NAME=$( basename $PKG )
     #ARTIFACTS=${ARTIFACTS}\"$PKG\",\ 
-    LINE="{ \"path\": \"$PKG\" , \"name\": \"$PKG_NAME\" }"
+    LINE={ \"path\": \"$PKG\" , \"name\": \"$PKG_NAME\" }
     if [[ -z $ARTIFACTS ]]; then
-        ARTIFACTS="$LINE"
+        ARTIFACTS=$LINE
     else
-        ARTIFACTS="${ARTIFACTS}, $LINE"
+        ARTIFACTS=${ARTIFACTS}, $LINE
     fi
 done
 #echo name=matrix::{\"file\": [${ARTIFACTS} \"md5sum\"]}
 #echo ::set-output name=matrix::{\"file\": [${ARTIFACTS} \"md5sum\"]}
 #echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
-echo "name=matrix::{\"include\":[ $ARTIFACTS ]}"
-echo "::set-output name=matrix::{\"include\":[ $ARTIFACTS ]}"
+echo name=matrix::{\"include\":[ $ARTIFACTS ]}
+echo ::set-output name=matrix::{\"include\":[ $ARTIFACTS ]}
 # }}
