@@ -2,9 +2,35 @@ name: 'RPM Build'
 description: 'Build RPMs from spec file and upload it as Artifact or Release Asset'
 author: 'Grigory Efimov'
 
+inputs:
+  platform:
+    description: 'Build target architecture (e.g., linux/amd64, linux/arm64)'
+    required: false
+    default: 'linux/amd64'
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: ${{ inputs.platform }}
+
+    - name: build on 'amazonlinux:2' platform=${{ inputs.platform }}
+      shell: bash
+      run: |
+        docker run \
+          --platform ${{ inputs.platform }} \
+          --rm \
+          --volume ${{ github.workspace }}:/workspace \
+          --volume ${{ github.action_path }}:/action_path \
+          --workdir /workspace \
+          amazonlinux:2 \
+          /bin/bash -c \
+            "uname -a
+            yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel
+            /action_path/build.sh
+            "
 
 branding:
   icon: 'package'

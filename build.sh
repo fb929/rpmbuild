@@ -3,19 +3,18 @@ PATH="/bin:/sbin:/usr/bin:/usr/sbin"
 
 do_usage(){
     cat <<EOF
-скрипт для сборки
-умеет:
-    1. пересобирать rpm-ки по build-репе
-    2. пересобирать по Source RPM
+The build script can:
+   1. Rebuild RPM packages based on the build repository.
+   2. Rebuild from Source RPM.
 
-rpmbuild/ пересоздаётся на каждый вызов $0
-логи скрипта искать в ~/log/
+The rpmbuild/ directory is recreated each time $0 is executed.
+Logs of the script can be found in ~/log/
 EOF
     exit 1
 }
 
 # vars
-SPEC_FILE=$(find /github/workspace/SPECS/ -type f -name "*.spec" | head -1)
+SPEC_FILE=$(find /workspace/SPECS/ -type f -name "*.spec" | head -1)
 BUILD_FROM_SPEC=true
 CENTOS_RELEASE=7
 TMP_DIR="$HOME/tmp"
@@ -88,17 +87,11 @@ fi
 # }}
 
 # move rpms and create checksum
-mv $RPMBUILD_DIR/SRPMS/* $HOME/
-mv $RPMBUILD_DIR/RPMS/*/* $HOME/
-cd $HOME
-md5sum *.rpm > md5sum
-sha256sum *.rpm > sha256sum
-
-# generate artifacts {{
-ARTIFACTS=""
-for package in *rpm; do ARTIFACTS=${ARTIFACTS}\"$package\",\ ; done
-echo ::set-output name=matrix::{\"file\": [${ARTIFACTS} \"sha256sum\", \"md5sum\"]}
-# }}
-
-## upload to packagecloud.io
-#package_cloud push gefimov/test/el/7 $HOME/*.rpm || true
+install -d /workspace/result/
+mv $RPMBUILD_DIR/SRPMS/* /workspace/result/
+mv $RPMBUILD_DIR/RPMS/*/* /workspace/result/
+cd /workspace/result/
+for FILE in *.rpm; do
+    md5sum $FILE > ${FILE}.md5sum
+    sha256sum $FILE > ${FILE}.sha256sum
+done
