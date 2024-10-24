@@ -17,5 +17,5 @@ jobs:
           name: Release ${{ github.ref_name }}
           generate_release_notes: true
           draft: false
-          prerelease: true
+          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
