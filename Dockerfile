@@ -7,6 +7,9 @@ COPY . .
 # Installing tools needed for rpmbuild,
 # depends on BuildRequires field in specfile, (TODO: take as input & install)
 RUN rm -f /etc/yum.repos.d/CentOS-Media.repo
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum clean all
 RUN yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel
 #RUN yum install --enablerepo=* -y centos-release-scl-rh centos-release-scl
 #RUN yum install --enablerepo=* -y rh-ruby23-rubygems
