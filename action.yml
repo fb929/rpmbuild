@@ -7,6 +7,14 @@ inputs:
     description: 'Build target architecture (e.g., linux/amd64, linux/arm64)'
     required: false
     default: 'linux/amd64'
+  docker-image:
+    description: 'Docker image (e.g amazonlinux:2, ubuntu:latest)'
+    required: false
+    default: 'amazonlinux:2'
+  pre-build-command:
+    description: 'Pre build command (e.g yum install -y rpmdevtools'
+    required: false
+    default: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel'
 
 runs:
   using: 'composite'
@@ -16,7 +24,7 @@ runs:
       with:
         platforms: ${{ inputs.platform }}
 
-    - name: build on 'amazonlinux:2' platform=${{ inputs.platform }}
+    - name: build on ${{ inputs.docker-image }} platform=${{ inputs.platform }}
       shell: bash
       run: |
         docker run \
@@ -28,7 +36,7 @@ runs:
           amazonlinux:2 \
           /bin/bash -c \
             "uname -a
-            yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel
+            ${{ inputs.pre-build-command }}
             /action_path/build.sh
             "
 
