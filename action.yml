@@ -33,7 +33,7 @@ runs:
           --volume ${{ github.workspace }}:/workspace \
           --volume ${{ github.action_path }}:/action_path \
           --workdir /workspace \
-          amazonlinux:2 \
+          ${{ inputs.docker-image }} \
           /bin/bash -c \
             "uname -a
             ${{ inputs.pre-build-command }}
