@@ -48,6 +48,10 @@ if [[ -z $PATH_TO_REPO ]]; then
 fi
 
 # sync spec and sources
+if ! which rsync 2>/dev/null; then
+    # install rsync if need
+    yum install -y rsync
+fi
 mkdir -p $PATH_TO_REPO/SOURCES/ # не обязательная директория
 rsync -a --copy-links $PATH_TO_REPO/SPECS/ $RPMBUILD_DIR/SPECS/
 rsync -a --copy-links $PATH_TO_REPO/SOURCES/ $RPMBUILD_DIR/SOURCES/
