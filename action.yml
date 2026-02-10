@@ -39,11 +39,7 @@ runs:
             uname -a
 
             tar --version
-            python3 - <<'PY'
-            import os,platform
-            print(platform.machine())
-            print(os.uname())
-            PY
+            python3 -c 'import os,platform; print(platform.machine()); print(os.uname())'
             mkdir -p /workspace/rpmbuild/BUILD/ok_test/auto && echo OK
 
             # change topdir for build
