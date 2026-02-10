@@ -39,7 +39,7 @@ runs:
             uname -a
 
             tar --version
-            python3 - <<PY
+            python3 - <<"PY"
             import os,platform
             print(platform.machine())
             print(os.uname())
