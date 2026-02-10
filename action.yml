@@ -34,18 +34,11 @@ runs:
           --volume ${{ github.action_path }}:/action_path \
           --workdir /workspace \
           ${{ inputs.docker-image }} \
-          /bin/bash -lc '
-            set -euxo pipefail
-            uname -a
-
-            # change topdir for build
-            mkdir -p /workspace/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-            printf "%%_topdir /workspace/rpmbuild\n" > /root/.rpmmacros
-
-            # run build
+          /bin/bash -c \
+            "uname -a
             ${{ inputs.pre-build-command }}
             /action_path/build.sh
-          '
+            "
 
 branding:
   icon: 'package'
