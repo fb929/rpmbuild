@@ -38,14 +38,6 @@ runs:
             set -euxo pipefail
             uname -a
 
-            tar --version
-            python3 - <<PY
-            import os,platform
-            print(platform.machine())
-            print(os.uname())
-            PY
-            mkdir -p /workspace/rpmbuild/BUILD/ok_test/auto && echo OK
-
             # change topdir for build
             mkdir -p /workspace/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
             printf "%%_topdir /workspace/rpmbuild\n" > /root/.rpmmacros
