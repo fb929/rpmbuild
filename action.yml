@@ -34,12 +34,12 @@ runs:
           --volume ${{ github.action_path }}:/action_path \
           --workdir /workspace \
           ${{ inputs.docker-image }} \
-          /bin/bash -lc "
+          /bin/bash -lc '
             set -euxo pipefail
             uname -a
 
             tar --version
-            python3 - <<'PY'
+            python3 - <<"PY"
             import os,platform
             print(platform.machine())
             print(os.uname())
@@ -48,12 +48,12 @@ runs:
 
             # change topdir for build
             mkdir -p /workspace/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-            echo '%%_topdir /workspace/rpmbuild' > /root/.rpmmacros
+            printf "%%_topdir /workspace/rpmbuild\n" > /root/.rpmmacros
 
             # run build
             ${{ inputs.pre-build-command }}
             /action_path/build.sh
-          "
+          '
 
 branding:
   icon: 'package'
