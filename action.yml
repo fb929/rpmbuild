@@ -42,6 +42,9 @@ runs:
             python3 -c 'import os,platform; print(platform.machine()); print(os.uname())'
             mkdir -p /workspace/rpmbuild/BUILD/ok_test/auto && echo OK
 
+            dnf -y install libarchive || yum -y install libarchive
+            bsdtar --version
+
             # change topdir for build
             mkdir -p /workspace/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
             echo '%_topdir /workspace/rpmbuild' > /root/.rpmmacros
