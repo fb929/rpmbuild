@@ -44,7 +44,7 @@ runs:
 
             # change topdir for build
             mkdir -p /workspace/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-            echo '%_topdir /workspace/rpmbuild' > /root/.rpmmacros
+            echo '%%_topdir /workspace/rpmbuild' > /root/.rpmmacros
 
             # run build
             ${{ inputs.pre-build-command }}
